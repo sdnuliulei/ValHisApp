@@ -13,6 +13,11 @@ namespace VHApp.Utils
 {
     public class BLLModule
     {
+        /// <summary>
+        ///注册组件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         private static IContainer Register<T>()
         {
             ContainerBuilder builder = new ContainerBuilder();
@@ -28,7 +33,8 @@ namespace VHApp.Utils
                 .EnableClassInterceptors()
                 .InterceptedBy(typeof(CallLogger));
 
-            builder.RegisterAssemblyTypes(assemblies).Where(type => baseType.IsAssignableFrom(type) && !type.IsAbstract)
+            builder.RegisterAssemblyTypes(assemblies)
+                   .Where(type => baseType.IsAssignableFrom(type) && !type.IsAbstract)
                   .AsImplementedInterfaces()
                   .InstancePerLifetimeScope();//InstancePerLifetimeScope 保证对象生命周期基于请求
             IContainer container = builder.Build();
@@ -36,6 +42,11 @@ namespace VHApp.Utils
             return container;
         }
 
+        /// <summary>
+        /// 获取解析实例
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static T GetInstance<T>() where T:class
         {
             IContainer container = Register<T>();
