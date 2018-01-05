@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IHIS;
-using VHApp.AOP;
-using Autofac.Extras.DynamicProxy;
 
 namespace VHApp.Manager
 {
-    [Intercept(typeof(CallLogger))]
     public class CardManager
     {
         private ICard card;
 
-        public CardManager(ICard card)
+        private Module module;
+
+        public CardManager(ICard card, Module module)
         {
+            this.module = module;
             this.card = card;
         }
 
-        public virtual bool Create()
+        public virtual string Create()
         {
-            return card.Create();
+            return module.Excute("12323","next");
         }
     }
 }

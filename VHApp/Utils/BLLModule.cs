@@ -34,11 +34,22 @@ namespace VHApp.Utils
                 .InterceptedBy(typeof(CallLogger));
 
             builder.RegisterAssemblyTypes(assemblies)
-                   .Where(type => baseType.IsAssignableFrom(type) && !type.IsAbstract)
+                   .Where(type => baseType.IsAssignableFrom(type)&&!type.IsAbstract)
                   .AsImplementedInterfaces()
-                  .InstancePerLifetimeScope();//InstancePerLifetimeScope 保证对象生命周期基于请求
+                  .InstancePerLifetimeScope()
+                  .EnableClassInterceptors()
+                  .InterceptedBy(typeof(CallLogger));//InstancePerLifetimeScope 保证对象生命周期基于请求
+            var constructorParams=new List<NamedParameter>
+            {
+                new NamedParameter("msg","hello"),
+                new NamedParameter("next",123)
+            };
+            builder.RegisterAssemblyTypes(assemblies).As<IHIS.Module>()
+                .WithParameter(new TypedParameter(typeof(string), "hello"))
+                .WithParameter(new TypedParameter(typeof(int),12323))
+                .EnableClassInterceptors()
+                .InterceptedBy(typeof(CallLogger));
             IContainer container = builder.Build();
-
             return container;
         }
 

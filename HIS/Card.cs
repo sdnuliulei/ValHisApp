@@ -9,13 +9,13 @@ namespace HIS
 {
     public class Card : ICard
     {
-        public bool Check(string CardNo)
+        public virtual bool Check(string CardNo)
         {
             Console.WriteLine("校验卡号：" + CardNo);
             return true;
         }
 
-        public bool Create()
+        public virtual bool Create()
         {
             Console.WriteLine("创建卡");
             return true;

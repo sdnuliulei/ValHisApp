@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Castle.Core;
 using Castle.DynamicProxy;
+using Newtonsoft.Json;
 
 namespace VHApp.AOP
 {
@@ -20,12 +21,13 @@ namespace VHApp.AOP
         /// <param name="invocation">包含被拦截方法的信息</param>
         public void Intercept(IInvocation invocation)
         {
+            LogHelper.LoggerHelper.StartLog4Net();
+            string module = invocation.TargetType.FullName;
             string methodName = invocation.Method.Name;
-            string before = "1";
+            LogHelper.LoggerHelper.WriteToFile(JsonConvert.SerializeObject(invocation.Arguments));
             //在被拦截的方法执行完毕后 继续执行
             invocation.Proceed();
-
-            string end = "2";
+            LogHelper.LoggerHelper.WriteToFile(invocation.ReturnValue.ToString());
         }
     }
 }

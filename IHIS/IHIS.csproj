@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ICard.cs" />
     <Compile Include="IDependency.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
