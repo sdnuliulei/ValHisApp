@@ -11,9 +11,6 @@ namespace VHApp.AOP
 {
     public class CallLogger:IInterceptor
     {
-        public CallLogger()
-        {
-        }
 
         /// <summary>
         /// 拦截方法 打印被拦截的方法执行前的名称、参数和方法执行后的 返回结果
@@ -24,10 +21,12 @@ namespace VHApp.AOP
             LogHelper.LoggerHelper.StartLog4Net();
             string module = invocation.TargetType.FullName;
             string methodName = invocation.Method.Name;
-            LogHelper.LoggerHelper.WriteToFile(JsonConvert.SerializeObject(invocation.Arguments));
+            string Arguments = JsonConvert.SerializeObject(invocation.Arguments);
             //在被拦截的方法执行完毕后 继续执行
             invocation.Proceed();
-            LogHelper.LoggerHelper.WriteToFile(invocation.ReturnValue.ToString());
+            string returnValue = JsonConvert.SerializeObject(invocation.ReturnValue);
+            string result = string.Format("模块:{0},方法:{1},入参:{2},返回值:{3}", module, methodName, Arguments, returnValue);
+            LogHelper.LoggerHelper.WriteToFile(result);
         }
     }
 }

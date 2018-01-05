@@ -53,6 +53,19 @@ namespace VHApp.Utils
             return container;
         }
 
+        private static IContainer RegisterDll<T>()
+        {
+            ContainerBuilder builder = new ContainerBuilder();
+            Assembly[] assemblies = new Assembly[]
+            {
+                Assembly.LoadFrom(AppDomain.CurrentDomain.BaseDirectory + "HIS.dll")
+            };
+            builder.RegisterType<CallLogger>();
+
+            IContainer container = builder.Build();
+            return container;
+        }
+
         /// <summary>
         /// 获取解析实例
         /// </summary>
