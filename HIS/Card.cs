@@ -21,4 +21,27 @@ namespace HIS
             return true;
         }
     }
+
+    public class TestAA
+    {
+        string text { set; get; }
+
+        internal string Test()
+        {
+            return "";
+        }
+    }
+
+    public class TestBB:TestAA
+    {
+        public TestBB()
+        {
+            
+        }
+
+        internal void TestAB()
+        {
+            
+        }
+    }
 }
